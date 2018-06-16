@@ -95,9 +95,9 @@ void loop()
         sk = 1;                                     // ANGULAR VELOCITY OF BOT                              
       
         // SETTING  VALUES FOR kp, ki AND kd
-        kp = 144;          
-        ki = 440;                                   // Ku = 240 (ZIEGLER NICHOLS)
-        kd = 42.08;       
+        kp = 24;          
+        ki = 134.8;                                   
+        kd = 0.925;       
 
         count = 0;                                  // SETTING count TO 0 // TO MAKE IT AVAILABLE IF REQUIRED AT SOME-TIME
         Serial.println(F("##########################################"));    // TO CONFORM IF INSTRUCTION TO START THE BOT EXECUTED
@@ -122,8 +122,8 @@ void loop()
     O = P + I + D;
 
     // SETTING PWM 
-    rt_pwm = (O); 
-    lt_pwm = (O) ;
+    rt_pwm = 95 + (O);                             // SETTING VARIABLE CONTANTS FOR THE TWO MOTORS IN ORDER TO REMOVE ERRORS IN O/P VOLTAGE
+    lt_pwm = 98 + (O);                            //  IN THE MOTOR DRIVER
 
   
    // TO CONTROL THE DIRECTION OF MOTORS BASED ON ERROR (E wrt THE SET-POINT i-e 0)
