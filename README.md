@@ -9,4 +9,4 @@ The bot uses MPU 6050 to get the values of angle of inclination of bot wrt verti
 
 L293D motor driver is being used to drive the two 100 rpm motors.
 
-Currently doing PID tuning to make the bot more stable and trying to use Ziegler Nichols’ method to get good values for P, I and D. 
+Currently following the process in the link :  http://support.motioneng.com/Downloads-Notes/Tuning/pid_overshoot.htm   for PID tuning 
