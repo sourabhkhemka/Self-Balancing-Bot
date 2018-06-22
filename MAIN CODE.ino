@@ -39,12 +39,15 @@ void setup()
     Wire.read()<<8 | Wire.read();
     Wire.read()<<8 | Wire.read();
     Wire.read()<<8 | Wire.read();
-    y += Wire.read()<<8 | Wire.read();         //STORING REQUIRED SENSOR DATA IN A VARIABLE
+    y += Wire.read()<<8 | Wire.read();         // STORING REQUIRED SENSOR DATA IN A VARIABLE
     Wire.read()<<8 | Wire.read();
 
+    analogWrite(13,0);                        // LED BLINKS FAST AND WITH DIM LIGHT WHILE CALIBRATING
+    
     if(count%100 == 0)
       {
         y = y/100;                            // TAKING MEAN OF EVERY 100 VALUES TO PREVENT OVERFLOW IN THE VARIABLE y
+        analogWrite(13,50);                   // LED BLINKS FAST AND WITH DIM LIGHT WHILE CALIBRATING 
       }
   }
   Serial.println(F("DONE !!"));
