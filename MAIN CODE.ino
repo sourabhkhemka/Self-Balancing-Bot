@@ -48,6 +48,8 @@ void setup()
       }
   }
   Serial.println(F("DONE !!"));
+  analogWrite(13,50);                        // GLOW LED ATTACHED TO digitalpiin 13 ONES CALIBRATED
+  
   delay(200);
 
   pinMode(4,OUTPUT);                         // SETTING THE DIRECTION PINS AS OUTPUT
@@ -95,9 +97,9 @@ void loop()
         sk = 1;                                     // ANGULAR VELOCITY OF BOT                              
       
         // SETTING  VALUES FOR kp, ki AND kd
-        kp = 24;          
-        ki = 134.8;                                   
-        kd = 0.925;       
+        kp = 0;              //24          
+        ki = 0;             //134.8                                   
+        kd = 0.57025;      //0.925       
 
         count = 0;                                  // SETTING count TO 0 // TO MAKE IT AVAILABLE IF REQUIRED AT SOME-TIME
         Serial.println(F("##########################################"));    // TO CONFORM IF INSTRUCTION TO START THE BOT EXECUTED
@@ -105,13 +107,23 @@ void loop()
 
     dps = (G_Y-y)/65.5;                             // GYRO SENSITIVITY IS SET TO 500 dps
         
+    if(dps>500)                                    // IF dps GREATER THAN 500(WHICH IS THE GYRO SENSITIVITY)
+      while(1)
+      {
+          Serial.println(F("!!ERROR!!"));                // 1. ERROR MESSAGE AND void loop HANGED 
+          analogWrite(13,50);                            
+          delay(370);                                    // 2. LED AT PIN 13 START BLINKING AND void loop HANGED
+          analogWrite(13,0);
+          delay(300);
+      }
+  
     G_yt += ((dps)*0.004);                          // CALCULATING ANGULAR VELOCITY USING EQUATIONS OF MOTIO // LOOP TIME = 4 ms
 
     t = G_yt * 0.85 + a_y * 0.15;                   // COMPLIMENTARY FILTER
 
     Serial.println(t);
 
-    E = abs((t+0.3)/2);                             // Adding 0.3 to t (theta) to compensate the errors
+    E = abs((t)/2);                             // Adding 0.3 to t (theta) to compensate the errors
 
   
     // CALCULATING P , I  AND  D
@@ -122,8 +134,8 @@ void loop()
     O = P + I + D;
 
     // SETTING PWM 
-    rt_pwm = 95 + (O);                             // SETTING VARIABLE CONTANTS FOR THE TWO MOTORS IN ORDER TO REMOVE ERRORS IN O/P VOLTAGE
-    lt_pwm = 98 + (O);                            //  IN THE MOTOR DRIVER
+    rt_pwm = 100 + (O);                             // SETTING VARIABLE CONTANTS FOR THE TWO MOTORS IN ORDER TO REMOVE ERRORS IN O/P VOLTAGE
+    lt_pwm = 94 + (O);                             //  IN THE MOTOR DRIVER
 
   
    // TO CONTROL THE DIRECTION OF MOTORS BASED ON ERROR (E wrt THE SET-POINT i-e 0)
