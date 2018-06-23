@@ -100,9 +100,9 @@ void loop()
         sk = 1;                                     // ANGULAR VELOCITY OF BOT                              
       
         // SETTING  VALUES FOR kp, ki AND kd
-        kp = 34.53;              //24          
-        ki = 166.53;        //134.8                                   
-        kd = 0.57025;      //0.925       
+        kp = 28.765;              //24          
+        ki = 100.575;        //134.8                                   
+        kd = (0.57025)/3;      //0.925       
 
         count = 0;                                  // SETTING count TO 0 // TO MAKE IT AVAILABLE IF REQUIRED AT SOME-TIME
         Serial.println(F("##########################################"));    // TO CONFORM IF INSTRUCTION TO START THE BOT EXECUTED
