@@ -100,9 +100,9 @@ void loop()
         sk = 1;                                     // ANGULAR VELOCITY OF BOT                              
       
         // SETTING  VALUES FOR kp, ki AND kd
-        kp = 28.765;              //24          
-        ki = 100.575;        //134.8                                   
-        kd = (0.57025)/3;      //0.925       
+        kp = 25.865;                    //28.765          
+        ki = 93.261;                   //100.575          /* ## TWO SET OF VALUES ## COMMENTED ONES ARE FOR WHEN MAPPING(map())                         
+        kd = (0.51525*1)/3;           //(0.57025)/3                                                                NOT DONE ## */
 
         count = 0;                                  // SETTING count TO 0 // TO MAKE IT AVAILABLE IF REQUIRED AT SOME-TIME
         Serial.println(F("##########################################"));    // TO CONFORM IF INSTRUCTION TO START THE BOT EXECUTED
@@ -126,8 +126,8 @@ void loop()
 
     Serial.println(t);
 
-    E = abs((t)/2);                             // Adding 0.3 to t (theta) to compensate the errors
-
+    E = abs((t)/2);                                // MAY ADD SOME VALUE TO t TO COMPENSATE ERROR IN MPU PLACEMENT OR IN CASE BIASED
+                                                  //  O/p FOR +ve AND -ve ROTATION 
   
     // CALCULATING P , I  AND  D
     P = kp * E;
@@ -140,6 +140,11 @@ void loop()
     rt_pwm = 100 + (O);                             // SETTING VARIABLE CONTANTS FOR THE TWO MOTORS IN ORDER TO REMOVE ERRORS IN O/P VOLTAGE
     lt_pwm = 94 + (O);                             //  IN THE MOTOR DRIVER
 
+  
+    rt_pwm = map(abs(rt_pwm),0,250,25,255);        // MOTOR STOPS TO ROTATE AT A CERTAIN VALUE OF pwm, THAT VALUE OF pwm IS CALLED
+    lt_pwm = map(abs(lt_pwm),0,244,21,255);       // MOTOR MINIMUM. THE MIN. VALUE OF abs(pwm) IS MAPPED TO MOTOR MIN. AND MAX VALUE
+                                                 //  (approx) IS MAPPED TO 255(max possible pwm signal)
+  
   
    // TO CONTROL THE DIRECTION OF MOTORS BASED ON ERROR (E wrt THE SET-POINT i-e 0)
     if(t<0 && sk==1)
@@ -164,9 +169,11 @@ void loop()
         }
   
     /*
-    if(count%3000 == 0)                       // COPYING ACCELEROMETER VALUE IN GYRO EVERY 3000 LOOP CYCLES TO ELIMINATE DRIFTS
-        G_Y = a_y;                            // IN GYRO READINGS
-    */
+    if(count%3000 == 0)                       // copying accelerometer value in gyro every 3000 loop cycles to eliminate drifts
+        G_Y = a_y;                            // in gyro readings
+    
+    */ /* > !! NOT USED BECAUSSE ACCELEROMETER READING DOESN'T CONTAIN THE DIRECTION OF ROTATION(+/-) THUS WILL RESULT IN EVEN POOR 
+          PERFORMANCE*/
   
     while((millis()-loop_timer)<4);           // TO CONTROL void loop() EXECUTION TIME
 }
