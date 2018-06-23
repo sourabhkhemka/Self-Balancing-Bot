@@ -94,7 +94,7 @@ void loop()
     a = sqrt(pow(A_X,2) + pow(A_Y,2) + pow(A_Z,2)); // ACCELERATION VECTOR
     a_y = acos(A_Z/a) * 57.2958;                    // ANGLE OF BOT wrt VERTICAL (ANGLE b/w Z-AXIS AND ACCELERATION VECTOR)
 
-    if(sk==0 && (abs(a_y) < 1))                     // START THE ROBOT WHEN THE ANGLE OF INCLINATION OF BOT IS LESS THAN 1 deg
+    if(sk==0 && (abs(int(a_y)) == 0))              // START THE ROBOT WHEN THE ANGLE OF INCLINATION OF BOT IS LESS THAN 1 deg
     {
         G_yt = -a_y;                                // INITIALLY COPYING ACCELEROMETER VALUE IN GYRO AND THEN CALCULATING ANGLE USING
         sk = 1;                                     // ANGULAR VELOCITY OF BOT                              
