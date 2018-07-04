@@ -22,7 +22,7 @@ void setup()
   Wire.write(0x08);                                                   
   Wire.endTransmission(true); 
 
-  Serial.println(F("CALIBRATING GYROSCOPE .....  17secs"));
+  Serial.println(F("CALIBRATING GYROSCOPE .....  3.4 secs"));
   while(count++ < 2000)
   {
     Wire.beginTransmission(addr);
