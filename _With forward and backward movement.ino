@@ -178,8 +178,8 @@ void loop()
 
      if(cmd==48)  // MAKES VALUE OF GYRO AND ACC EQUAL // LOW RELIABILITY
         {
-          G_yt = a_y_i;                       // copying accelerometer value in gyro every 3000 loop cycles to eliminate drifts
-          Serial.println(F("####"));          // in gyro readings
+          G_yt = a_y_i;                       // copying accelerometer value in gyro on command "0" to eliminate drifts accumulated
+          Serial.println(F("####"));                                                                  // over time in gyro readings
         }
 
       if(cmd == 53)
