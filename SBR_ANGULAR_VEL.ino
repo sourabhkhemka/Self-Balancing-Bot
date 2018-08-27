@@ -115,10 +115,9 @@ void loop()
 void PID_OUTPUT_CALC()
 
 {
-
-  accel_angle = accel_angle - set_angle;               //USING DYNAMICALLY DETERMINED SET POINT
-
+  
   accel_angle = abs(0.98*gyro_angle + 0.02*accel_angle*(gyro_angle/abs(gyro_angle)));
+  accel_angle = accel_angle - set_angle;               //USING DYNAMICALLY DETERMINED SET POINT
 
   set_point = 5*pow(accel_angle,2);                      
 
